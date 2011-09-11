@@ -1,0 +1,13 @@
+name: SetRankPB
+version: 1.0
+main: com.baummann.setrankpb.SetRankPB
+author: Baummann
+commands:
+   rank:
+      description: Changes someone's rank.
+      usage: /<command>
+      aliases: [setrank]
+permissions:
+   setrank.rankall:
+      description: Access to /rank
+      default: op
