@@ -1,5 +1,6 @@
 name: SetRankPB
-version: 1.1
+version: 1.2
+softdepend: [Spout]
 main: com.baummann.setrankpb.SetRankPB
 commands:
    setrank:
@@ -7,6 +8,9 @@ commands:
       usage: /<command> [Player] [Rank]
       aliases: [rank]
 permissions:
+   setrankpb.rank.<rank>:
+      description: Ability to rank to a specific rank.
+      default: op
    setrankpb.rankall:
       description: Permission to rank to every rank.
       default: op

@@ -21,11 +21,12 @@ public class SetRankPB extends JavaPlugin {
 	public boolean useSpout = false;
 	public boolean achievements;
 	public String icon;
-	public static String version = "1.0";
+	public static String version = "1.2";
 	final Plugin setRankPB = this;
     public String noPermission = ChatColor.RED + "You don't have Permission to use this!";
     public void onEnable() {
     	System.out.println("[SetRankPB] Enabling...");
+    	if (!new File("plugins/SetRankPB").exists()) new File("plugins/SetRankPB").mkdir();
     	loadConfig();
     	Plugin permBukkit = getServer().getPluginManager().getPlugin("PermissionsBukkit");
     	if (permBukkit != null) {canUse = true; plugin = (PermissionsPlugin)permBukkit;}
@@ -37,12 +38,6 @@ public class SetRankPB extends JavaPlugin {
     	} else {
     		System.out.println("[SetRankPB] Couldn't find Spout, not using achievements.");
     	}
-    	System.out.println("[SetRankPB] Restoring RAM...");
-    	getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-    		public void run() {
-    			
-    		}
-    	}, 20 * 2);
     	getCommand("rank").setExecutor(new CommandRank(this));
     	System.out.println("[SetRankPB] Enabled. Version " + version);
     }

@@ -39,4 +39,15 @@ public class RankHandler {
     	config.save();
     	plugin.reloadPermissions();
     }
+    
+    public void setOfflineRank(String player, String rank) {
+    	Configuration config = config();
+    	config.load();
+    	plugin.loadConfig();
+    	List<String> group = new ArrayList<String>();
+    	group.add(rank);
+    	config.setProperty("users." + player + ".groups", group);
+    	config.save();
+    	plugin.reloadPermissions();
+    }
 }

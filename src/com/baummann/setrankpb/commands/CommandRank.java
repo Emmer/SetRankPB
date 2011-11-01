@@ -31,21 +31,26 @@ public class CommandRank implements CommandExecutor {
         			return true;
         		}
         		if (player.hasPermission("setrankpb.rankall") || player.hasPermission("setrankpb.rank." + split[1])) {
-        			Player target = plugin.getServer().matchPlayer(split[0]).get(0);
-        			handler.setRank(target, split[1]);
+            		Player target = plugin.getServer().getPlayer(split[0].toLowerCase());
+            		if (!target.isOnline()) {
+            			handler.setOfflineRank(split[0], split[1]);
+            			player.sendMessage("You changed " + split[0] + "'s rank to " + split[1] + ".");
+            			return true;
+            		}
+            		handler.setRank(target, split[1]);
         			player.sendMessage("You changed " + target.getName() + "'s rank to " + split[1] + ".");
         			try {
-        				if (target instanceof SpoutPlayer && plugin.achievements && plugin.useSpout) {
+            		    if (target instanceof SpoutPlayer && plugin.achievements && plugin.useSpout) {
         				    try {((SpoutPlayer)target).sendNotification("SetRankPB", "You are now " + split[1], Material.getMaterial(plugin.icon.toUpperCase().replace(" ", "_")));} catch (NullPointerException e) {System.out.println("[SetRankPB] WARNING: The material " + plugin.icon.toUpperCase().replace(" ", "_") + " does not exist. Using default.");((SpoutPlayer)target).sendNotification("SetRankPB", "You are now " + split[1], Material.DIAMOND_PICKAXE);} catch (Exception e) {}
-        			    }
+            		    }
         			} catch (NoClassDefFoundError e) {}
-        			return true;
+            		return true;
         		} else {
         			player.sendMessage(plugin.noPermission);
         			return true;
         		}
         	} else {
-        		Player target = plugin.getServer().matchPlayer(split[0]).get(0);
+        		Player target = plugin.getServer().getPlayer(split[0].toLowerCase());
         		handler.setRank(target, split[1]);
     			sender.sendMessage("You changed " + target.getName() + "'s rank to " + split[1] + ".");
     			try {
@@ -58,9 +63,10 @@ public class CommandRank implements CommandExecutor {
     	} catch (ArrayIndexOutOfBoundsException e) {
     		sender.sendMessage(ChatColor.RED + "Wrong syntax! Usage: /rank [Player] [Rank]");
     		return true;
-    	} catch (IndexOutOfBoundsException e) {
-    		sender.sendMessage(ChatColor.RED + "No such player!");
-    		return true;
+    	} catch (NullPointerException e) {
+			handler.setOfflineRank(split[0], split[1]);
+			sender.sendMessage("You changed " + split[0] + "'s rank to " + split[1] + ".");
+			return true;
     	}
     }
 }
