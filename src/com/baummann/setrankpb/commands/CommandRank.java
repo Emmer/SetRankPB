@@ -1,5 +1,6 @@
 package com.baummann.setrankpb.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -32,6 +33,10 @@ public class CommandRank implements CommandExecutor {
         		}
         		if (player.hasPermission("setrankpb.rankall") || player.hasPermission("setrankpb.rank." + split[1])) {
             		Player target = plugin.getServer().getPlayer(split[0].toLowerCase());
+            		if (player.hasPermission("setrankpb.norank." + plugin.getHandler().getRank(target))) {
+            			player.sendMessage(ChatColor.RED + "You may not rank that player!");
+            			return true;
+            		}
             		if (!target.isOnline()) {
             			handler.setOfflineRank(split[0], split[1]);
             			player.sendMessage("You changed " + split[0] + "'s rank to " + split[1] + ".");

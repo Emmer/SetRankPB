@@ -1,5 +1,5 @@
 name: SetRankPB
-version: 1.2
+version: 1.2.1
 softdepend: [Spout]
 main: com.baummann.setrankpb.SetRankPB
 commands:
@@ -7,10 +7,17 @@ commands:
       description: Changes someone's rank.
       usage: /<command> [Player] [Rank]
       aliases: [rank]
+   promotion:
+      description: Promotion with payment.
+      usage: /<command> [option]
+      aliases: [promo]
 permissions:
    setrankpb.rank.<rank>:
       description: Ability to rank to a specific rank.
       default: op
    setrankpb.rankall:
       description: Permission to rank to every rank.
+      default: op
+   setrankpb.iconomy.price:
+      description: Ability to view a price of a rank.
       default: op
